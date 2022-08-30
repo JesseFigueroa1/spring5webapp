@@ -2,11 +2,9 @@ package com.Jesse.spring5webapp.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-/**
- * Created by jt on 12/22/19.
- */
 @Entity
 public class Book {
 
@@ -16,6 +14,9 @@ public class Book {
 
     private String title;
     private String isbn;
+
+    @ManyToOne
+    private Publisher publisher;
 
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
@@ -54,6 +55,14 @@ public class Book {
         this.isbn = isbn;
     }
 
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
     public Set<Author> getAuthors() {
         return authors;
     }
@@ -79,7 +88,7 @@ public class Book {
 
         Book book = (Book) o;
 
-        return id != null ? id.equals(book.id) : book.id == null;
+        return Objects.equals(id, book.id);
     }
 
     @Override
